@@ -32,4 +32,6 @@ endif
 # endif
 #
 
+DPDK_CONF_OPTS += -Dcpu_instruction_set=generic
+
 $(eval $(meson-package))

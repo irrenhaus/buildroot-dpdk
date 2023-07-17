@@ -1,0 +1,28 @@
+--- a/config/meson.build	2023-07-17 12:54:44.921377511 +0200
++++ b/config/meson.build	2023-07-17 13:29:38.501631371 +0200
+@@ -75,7 +75,13 @@
+ 
+ # set the cpu_instruction_set and cflags for it
+ if meson.is_cross_build()
+-    cpu_instruction_set = host_machine.cpu()
++    if get_option('cpu_instruction_set').contains('') # is empty?
++        warning('Using cross build cpu_instruction_set')
++        cpu_instruction_set = host_machine.cpu()
++    else
++        warning('Overriding cross build cpu_instruction_set with given option')
++        cpu_instruction_set = get_option('cpu_instruction_set')
++    endif
+ else
+     cpu_instruction_set = get_option('cpu_instruction_set')
+     machine = get_option('machine')
+@@ -93,6 +99,10 @@
+     endif
+ endif
+ 
++cpu_instruction_set = 'auto'
++
++warning('cpu_instruction_set is set to ' + cpu_instruction_set)
++
+ if platform == 'native'
+     if cpu_instruction_set == 'auto'
+         cpu_instruction_set = 'native'
