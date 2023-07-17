@@ -8,12 +8,9 @@ config BR2_PACKAGE_DPDK_ARCH_SUPPORTS
   default y if BR2_x86_64
   default y if BR2_aarch64 || BR2_aarch64_be
 
-config BR2_PACKAGE_DPDK_ARCH_CONFIG
+config BR2_GCC_TARGET_CPU
   string
-  depends on BR2_PACKAGE_DPDK_ARCH_SUPPORTS
-  default "i686-native-linuxapp-gcc" if BR2_x86_i686
-  default "x86_64-native-linuxapp-gcc" if BR2_x86_64
-  default "arm64-armv8a-linuxapp-gcc" if BR2_aarch64 || BR2_aarch64_be
+  default "x86-64-4"
 
 comment "dpdk needs BR2_PACKAGE_BUSYBOX_SHOW_OTHERS"
 	depends on !BR2_PACKAGE_BUSYBOX_SHOW_OTHERS
@@ -35,31 +32,24 @@ config BR2_PACKAGE_DPDK
   select BR2_PACKAGE_NET_TOOLS
   select BR2_PACKAGE_LIBGLIB2
   select BR2_PACKAGE_NUMACTL
+  select BR2_PACKAGE_PYTHON_PYELFTOOLS
   help
     DPDK is a set of libraries and drivers for fast packet processing.
     http://www.dpdk.org/
 
 if BR2_PACKAGE_DPDK
-  comment "DPDK kernel modules need a Linux kernel to be built"
-  	depends on !BR2_LINUX_KERNEL
-
-  config BR2_PACKAGE_DPDK_KERNEL_MODULES
-    bool "Install kernel modules"
-    depends on BR2_LINUX_KERNEL
-
     choice
     	prompt "DPDK Version"
-      default BR2_DPDK_19_02 if !BR2_PACKAGE_HOST_LINUX_HEADERS_CUSTOM_REALLY_OLD
-      default BR2_DPDK_18_11 if BR2_PACKAGE_HOST_LINUX_HEADERS_CUSTOM_REALLY_OLD
+      default BR2_DPDK_23.03
 
     	help
     	  Select the version of dpdk you wish to use.
 
-      config BR2_DPDK_19_02
-      	bool "dpdk 19.02 (Kernel version >= 3.16)"
+      config BR2_DPDK_23.03
+      	bool "dpdk 23.03"
 
-      config BR2_DPDK_18_11
-      	bool "dpdk 18.11 (Kernel version >= 3.2)"
+      config BR2_DPDK_23.07RC
+      	bool "dpdk 23.07-rc3"
 
     endchoice
 
