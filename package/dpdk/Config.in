@@ -40,10 +40,13 @@ config BR2_PACKAGE_DPDK
 if BR2_PACKAGE_DPDK
     choice
     	prompt "DPDK Version"
-      default BR2_DPDK_23.03
+      default BR2_DPDK_22.11
 
     	help
     	  Select the version of dpdk you wish to use.
+
+      config BR2_DPDK_22.11
+      	bool "dpdk 22.11 LTS"
 
       config BR2_DPDK_23.03
       	bool "dpdk 23.03"

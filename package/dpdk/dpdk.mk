@@ -4,10 +4,16 @@
 #
 ################################################################################
 
+ifeq ($(BR2_DPDK_22.11),y)
+DPDK_VERSION = 22.11
+endif
+
+ifeq ($(BR2_DPDK_23.03),y)
+DPDK_VERSION = 23.03
+endif
+
 ifeq ($(BR2_DPDK_23.07RC),y)
 DPDK_VERSION = 23.07-rc3
-else
-DPDK_VERSION = 23.03
 endif
 
 DPDK_SITE = http://dpdk.org/browse/dpdk/snapshot
